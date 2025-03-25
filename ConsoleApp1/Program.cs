@@ -91,7 +91,9 @@ public class Program
         //var result = workbook(5, 3, new List<int> { 4, 2, 6, 1, 10 });
         #endregion
 
-        //kaprekarNumbers(100, 1);
+        kaprekarNumbers(1, 100);
+        Console.WriteLine();
+        kaprekarNumbers(1, 10_000);
 
         //Console.WriteLine(result);
 
@@ -106,10 +108,64 @@ public class Program
     //    return result;
     //}
 
-    public static void kaprekarNumbers(int p, int q)
+    public static void kaprekarNumbers(int start, int end)
     {
+        if (start >= end)
+        {
+            Console.WriteLine("INVALID RANGE");
+            return;
+        }
 
+        for (var i = start; i < end; i++)
+        {
+            if (IsKaprekarNumber(i))
+                Console.Write($"{i} ");
+        }
     }
+
+    public static bool IsKaprekarNumber(int num)
+    {
+        if (num < 0)
+            return false;
+
+        var numLength = num.ToString().Length;
+
+        var square = Math.Pow(num, 2);
+        var total = 0;
+
+        var squareString = square.ToString();
+
+        if (num.ToString().EndsWith("10"))
+            return total == num;
+
+#if DEBUG
+        if (num == 4879)
+        {
+            var aa = 1;
+        }
+#endif
+
+        switch (numLength)
+        {
+            case 1:
+                total = squareString.Sum(character => int.Parse(character.ToString()));
+                break;
+
+            default:
+                var intList = new List<int>();
+                for (var i = 2; i <= numLength; i++)
+                {
+                    var isOutLayer = (squareString[i..].StartsWith('0') || squareString[i..].StartsWith("00"))&& !num.ToString().EndsWith('9');
+                    intList.Add(isOutLayer? 0 : int.Parse(squareString[..i]) + int.Parse(squareString[i..]));
+                }
+                
+                total =  intList.Aggregate((current, next) => Math.Abs(current - num) < Math.Abs(next - num) ? current : next);
+                break;
+        }
+
+        return total == num;
+    }
+
     #region [ Completed Problems ]
     public static int workbook(int numChapter, int maxPerPage, List<int> chapter)
     {
@@ -259,7 +315,8 @@ public class Program
         if (blackGifts == whiteGifts)
         {
             totalConvertCost = convertCost * whiteGifts;
-        } else
+        }
+        else
         {
             BigInteger difCostGift = whiteCosts > blackCosts ? whiteGift : blackGift;
             totalConvertCost = convertCost * difCostGift;
@@ -328,7 +385,8 @@ public class Program
                 {
                     result++;
                 }
-            } catch (Exception)
+            }
+            catch (Exception)
             {
 
                 continue;
@@ -452,7 +510,8 @@ public class Program
             {
 
                 minutes = $"{ones[1]} minute past ";
-            } else
+            }
+            else
             {
                 minutes = $"{ones[m]} minutes past ";
             }
@@ -476,7 +535,8 @@ public class Program
             if (m < 20)
             {
                 minutes = $"{ones[m]} minutes past ";
-            } else
+            }
+            else
             {
                 minutes = $"{tens[m / 10]} {ones[m % 10]} minutes past ";
             }
@@ -510,7 +570,8 @@ public class Program
         if (m < 20)
         {
             minutes = $"{ones[m]} minutes to ";
-        } else
+        }
+        else
         {
             minutes = $"{tens[m / 10]} {ones[m % 10]} minutes to ";
         }
@@ -579,7 +640,8 @@ public class Program
             if (keyAndPosition.Keys.Contains(a[i]))
             {
                 keyAndPosition[a[i]].Add(i);
-            } else
+            }
+            else
             {
                 keyAndPosition.Add(a[i], new List<int>() { i });
             }
@@ -611,7 +673,8 @@ public class Program
             if (i % 2 == 0)
             {
                 result += 1;
-            } else
+            }
+            else
             {
 
                 result *= 2;
@@ -653,7 +716,8 @@ public class Program
             if (i == 1)
             {
                 cumuList.Add(liked);
-            } else
+            }
+            else
             {
                 cumuList.Add(liked + cumuList[i - 2]);
             }
@@ -743,11 +807,13 @@ public class Program
                     {
                         item++;
                     }
-                } else
+                }
+                else
                 {
                     continue;
                 }
-            } catch (Exception)
+            }
+            catch (Exception)
             {
 
                 continue;
@@ -821,7 +887,8 @@ public class Program
             if (path[i].Equals('D'))
             {
                 currentAltitude--;
-            } else
+            }
+            else
             {
                 currentAltitude++;
             }
@@ -836,7 +903,8 @@ public class Program
                 {
                     result++;
                 }
-            } catch (Exception)
+            }
+            catch (Exception)
             {
 
                 continue;
@@ -857,10 +925,12 @@ public class Program
         if (dCatA > dCatB)
         {
             result = "Cat B";
-        } else if (dCatA < dCatB)
+        }
+        else if (dCatA < dCatB)
         {
             result = "Cat A";
-        } else
+        }
+        else
         {
             result = "Mouse C";
         }
@@ -880,7 +950,8 @@ public class Program
             if (item.Count % 2 == 0)
             {
                 result += item.Count / 2;
-            } else if (item.Count > 2)
+            }
+            else if (item.Count > 2)
             {
                 result += item.Count / 2;
             }
@@ -919,13 +990,16 @@ public class Program
             if (isGregorianLeapYear == 1 && isJulianLeapYear == 1)
             {
                 adding = 1;
-            } else if (isGregorianLeapYear == 1 && isJulianLeapYear == 0)
+            }
+            else if (isGregorianLeapYear == 1 && isJulianLeapYear == 0)
             {
                 adding = 0;
-            } else if (isGregorianLeapYear == 0 && isJulianLeapYear == 0)
+            }
+            else if (isGregorianLeapYear == 0 && isJulianLeapYear == 0)
             {
                 adding = 0;
-            } else if (isGregorianLeapYear == 0 && isJulianLeapYear == 1)
+            }
+            else if (isGregorianLeapYear == 0 && isJulianLeapYear == 1)
             {
                 adding = 0;
             }
@@ -1034,7 +1108,8 @@ public class Program
             for (var j = i; j < i + m + 1; j++)
             {
                 sum += s[j];
-            };
+            }
+            ;
 
             if (sum == d)
             {
@@ -1042,7 +1117,8 @@ public class Program
             }
 
             sum = 0;
-        };
+        }
+        ;
 
         return result;
     }
@@ -1198,10 +1274,12 @@ public class Program
             if (player[i] < minScore)
             {
                 result.Add(totalRank);
-            } else if (player[i] > maxScore)
+            }
+            else if (player[i] > maxScore)
             {
                 result.Add(1);
-            } else
+            }
+            else
             {
                 ranked.Add(player[i]);
 
