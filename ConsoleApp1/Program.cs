@@ -19,6 +19,7 @@ public class Program
 
         //var result = migratoryBirds(new List<int>() { 1, 2, 3, 4, 5, 2, 2, 2, 4, 4, 4, 1 });
         //bonAppetit(new List<int> { 3, 10, 2 , 9 }, 10, 12);
+        //bonAppetit(new List<int> { 3, 10, 2 , 9 }, 10, 12);
 
         // var result = sockMerchant(5, new List<int> { 10, 20, 20, 10, 10, 30, 50, 10, 20 });
         //Console.WriteLine(result);
@@ -90,13 +91,20 @@ public class Program
         //var result = workbook(5, 3, new List<int> { 4, 2, 6, 1, 10 });
         #endregion
 
-        kaprekarNumbers(100, 1);
+        //kaprekarNumbers(100, 1);
 
         //Console.WriteLine(result);
 
         Console.WriteLine("\nThis Is ThanhNVan's HackerRank Playground.");
         Console.ReadLine();
     }
+
+    //public static int getTotalX(List<int> a, List<int> b)
+    //{
+    //    var result = 0;
+
+    //    return result;
+    //}
 
     public static void kaprekarNumbers(int p, int q)
     {
@@ -881,20 +889,12 @@ public class Program
         return result;
     }
 
-    public static void bonAppetit(List<int> bill, int k, int b)
+    public static void bonAppetit(List<int> bill, int annaNotEat, int annaCharged)
     {
+        bill.RemoveAt(annaNotEat);
+        var annaBillSum = bill.Sum() / 2;
 
-        var annaBill = bill.Where(x => x != k);
-
-        var annaSum = annaBill.Sum() / 2;
-
-        if (annaSum == b)
-        {
-            Console.WriteLine("Bon Appetit");
-            return;
-        }
-
-        var charged = bill.Sum() / 2 - annaSum;
+        var charged = annaCharged - annaBillSum;
 
         if (charged == 0)
         {
